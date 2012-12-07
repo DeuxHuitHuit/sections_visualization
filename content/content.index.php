@@ -8,6 +8,8 @@
 
 	require_once(TOOLKIT . '/class.administrationpage.php');
 
+	require_once(EXTENSIONS . '/sections_visualization/lib/class.structure.php');
+
 	class contentExtensionSections_visualizationIndex extends AdministrationPage {
 
 		public function __construct() {
@@ -26,6 +28,20 @@
 			$this->setTitle(__('%1$s &ndash; %2$s', array(__('Symphony'), $title)));
 
 			$this->appendSubheading(__($title));
+
+			$struct = new Structure();
+			$sections = $struct->lazyLoad()->getSections();
+
+			foreach ($sections as $section) {
+				$xmlSection = new XMLElement('section');
+				$xmlSection->appendChild(new XMLElement('h3', $section['section']['name']));
+
+				foreach ($section['fields'] as $field) {
+					$xmlSection->appendChild(new XMLElement('p', $field['label']));
+				}
+
+				$this->Form->appendChild($xmlSection);
+			}
 
 			// build header table
 			/*$aTableHead = ViewFactory::buildTableHeader($this->_cols);

@@ -15,7 +15,7 @@ sections are structured in Symphony
 
 ### INSTALLATION ###
 
-- `git clone` / download and unzip the tarball file
+- `git clone` / download and unpack the tarball file
 - (re)Name the folder **sections_visualization**
 - Put into the extension directory
 - Enable/install just like any other extension
