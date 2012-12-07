@@ -15,7 +15,7 @@ sections are structured in Symphony
 
 ### INSTALLATION ###
 
-- Unzip the oembed_field.zip file
+- `git clone` / download and unzip the tarball file
 - (re)Name the folder **sections_visualization**
 - Put into the extension directory
 - Enable/install just like any other extension
