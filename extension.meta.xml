@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension id="sections_visualization" status="experimental" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+	<name>Sections Visualization</name>
+	<description>
+		Offers a global view of the sections (Data Model) and their fields
+	</description>
+	<repo type="github">https://github.com/DeuxHuitHuit/sections_visualization</repo>
+	<url type="discuss">https://github.com/DeuxHuitHuit/sections_visualization/issues</url>
+	<types>
+		<type>Sections</type>
+		<type>Workflow</type>
+		<type>Data Visualization</type>
+	</types>
+	<authors>
+		<author>
+			<name github="DeuxHuitHuit" symphony="nitriques" twitter="DeuxHuitHuit">Deux Huit Huit</name>
+			<website>http://www.deuxhuithuit.com</website>
+		</author>
+	</authors>
+	<dependencies>
+		<!-- None -->
+	</dependencies>
+	<releases>
+		<release version="1.0" date="TBA" min="2.3.1">
+			- First release
+		</release>
+	</releases>
+</extension>
