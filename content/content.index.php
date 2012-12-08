@@ -29,8 +29,7 @@
 
 			$this->appendSubheading(__($title));
 
-			$struct = new Structure();
-			$sections = $struct->lazyLoad()->getSections();
+			$sections = Structure::instance()->lazyLoad()->getSections();
 
 			foreach ($sections as $section) {
 				$xmlSection = new XMLElement('section');

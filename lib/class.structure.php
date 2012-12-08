@@ -13,8 +13,15 @@
 		// holds up all sections data
 		private $_sections = array();
 
-		public function __construct() {
+		private static $_instance = NULL;
 
+		private function __construct() {}
+
+		public static function instance() {
+			if (!self::$_instance) {
+				self::$_instance = new self();
+			}
+			return self::$_instance;
 		}
 
 		public function getSections() {
