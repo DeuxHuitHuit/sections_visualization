@@ -37,7 +37,7 @@
 				array(
 					'location'	=> __('System'),
 					'name'	=> sprintf(__(self::EXT_NAME)),
-					'link'	=> '/index/'
+					'link'	=> ''
 				),
 			);
 		}

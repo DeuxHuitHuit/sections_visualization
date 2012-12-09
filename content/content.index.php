@@ -23,47 +23,83 @@
 		public function __viewIndex() {
 			$title = __(extension_sections_visualization::EXT_NAME);
 
-			//$this->setPageType('table');
-
 			$this->setTitle(__('%1$s &ndash; %2$s', array(__('Symphony'), $title)));
 
 			$this->appendSubheading(__($title));
 
+			$this->buildSections();
+		}
+
+		private function buildSections() {
 			$sections = Structure::instance()->lazyLoad()->getSections();
 
 			foreach ($sections as $section) {
 				$xmlSection = new XMLElement('section');
 				$xmlSection->appendChild(new XMLElement('h3', $section['section']['name']));
 
-				foreach ($section['fields'] as $field) {
-					$xmlSection->appendChild(new XMLElement('p', $field['label']));
-				}
+				$xmlSection->appendChild($this->buildSectionData($section['section']));
+				$xmlSection->appendChild($this->buildSectionFields($section['fields']));
 
 				$this->Form->appendChild($xmlSection);
 			}
-
-			// build header table
-			/*$aTableHead = ViewFactory::buildTableHeader($this->_cols);
-
-			// build body table
-			$aTableBody = ViewFactory::buildTableBody($this->_cols, $this->_data);
-
-			// build data table
-			$table = Widget::Table(
-				Widget::TableHead($aTableHead), // header
-				NULL, // footer
-				Widget::TableBody($aTableBody), // body
-				'selectable' // class
-				// id
-				// attributes
-			);
-
-			$this->Form->appendChild($table);
-
-			$this->Form->appendChild(
-				ViewFactory::buildActions($this->_hasData)
-			);*/
 		}
 
+		private function buildSectionData($section) {
+			$headerTds = array();
+			$dataTds = array();
+			foreach ($section as $secPropKey => $secProp) {
+				if ($secPropKey != 'name' && $secPropKey != 'handle') {
+					$headerTds[] = array($secPropKey, 'col');
+					$dataTds[] = Widget::TableData($secProp);
+				}
+			}
+
+			$rows = array(Widget::TableRow($dataTds));
+			return Widget::Table(
+						Widget::TableHead($headerTds),
+						NULL,
+						Widget::TableBody($rows),
+						'section-props' // class
+						// id
+						// attributes
+						);
+		}
+
+		private function buildSectionFields($fields) {
+			$xmlFields = new XMLElement('ul', NULL, array('class' => 'fields'));
+
+			foreach ($fields as $field) {
+				$xmlField = new XMLElement('li');
+				$xmlFieldTitle = new XMLElement('div', $field['label']);
+
+				$headerTds = array();
+				$dataTds = array();
+				foreach ($field as $fieldKey => $fieldProp) {
+					if ($fieldKey != 'label' && $fieldKey != 'element_name') {
+						$headerTds[] = array($fieldKey, 'col');
+						if (is_array($fieldProp)) {
+							$fieldProp = implode(', ', $fieldProp);
+						}
+						$dataTds[] = Widget::TableData($fieldProp);
+					}
+				}
+
+				$rows = array(Widget::TableRow($dataTds));
+
+				$xmlFieldTable = Widget::Table(
+							Widget::TableHead($headerTds),
+							NULL,
+							Widget::TableBody($rows),
+							'fields-props' // class
+							// id
+							// attributes
+							);
+
+				$xmlField->appendChild($xmlFieldTitle);
+				$xmlField->appendChild($xmlFieldTable);
+				$xmlFields->appendChild($xmlField);
+			}
+			return $xmlFields;
+		}
 
 	}
