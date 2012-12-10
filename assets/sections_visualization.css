@@ -1,0 +1,13 @@
+/*
+ * @author Deux Huit Huit
+ */
+
+#contents section {
+	
+}
+
+#contents section>h3 {
+	font-size: 16px;
+	padding: 4px 19px;
+	width: auto;
+}

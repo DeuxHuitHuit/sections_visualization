@@ -14,7 +14,6 @@
 
 		public function __construct() {
 			parent::__construct();
-
 		}
 
 		/**
@@ -23,12 +22,17 @@
 		public function __viewIndex() {
 			$title = __(extension_sections_visualization::EXT_NAME);
 
-			$this->setTitle(__('%1$s &ndash; %2$s', array(__('Symphony'), $title)));
+			$this->addStylesheetToHead(URL . '/extensions/sections_visualization/assets/sections_visualization.css', 'screen', time() + 10);
+			$this->addScriptToHead(URL . '/extensions/sections_visualization/assets/sections_visualization.js', time() + 10, false);
 
+			$this->setTitle(__('%1$s &ndash; %2$s', array(__('Symphony'), $title)));
 			$this->appendSubheading(__($title));
 
 			$this->buildSections();
 		}
+
+		/* HELPERS */
+
 
 		private function buildSections() {
 			$sections = Structure::instance()->lazyLoad()->getSections();
